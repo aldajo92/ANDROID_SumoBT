@@ -21,7 +21,7 @@ public class BluetoothService implements BluetoothSPP.BluetoothConnectionListene
 
     private Context context;
     private BluetoothSPP bt;
-    private Boolean btConnect = false;
+    private Boolean isBTConnected = false;
 
     private ConnectedListener connectedListener;
 
@@ -35,7 +35,7 @@ public class BluetoothService implements BluetoothSPP.BluetoothConnectionListene
 
     public void checkBluetoothState(Activity activity) {
         if (bt.isBluetoothEnabled()) {
-            if (!this.btConnect) {
+            if (!this.isBTConnected) {
                 bt.setupService();
                 bt.startService(BluetoothState.DEVICE_OTHER);
                 loadDeviceList(activity);
@@ -46,8 +46,8 @@ public class BluetoothService implements BluetoothSPP.BluetoothConnectionListene
         }
     }
 
-    public Boolean getBtConnect() {
-        return btConnect;
+    public Boolean getIsBTConnected() {
+        return isBTConnected;
     }
 
     private void loadDeviceList(Activity activity) {
@@ -94,7 +94,7 @@ public class BluetoothService implements BluetoothSPP.BluetoothConnectionListene
     public void onDeviceConnected(String name, String address) {
         // Do something when successfully connected
         Toast.makeText(context, "Connected...", Toast.LENGTH_SHORT).show();
-        btConnect = true;
+        isBTConnected = true;
         if(null != connectedListener) connectedListener.onDeviceConnected();
     }
 
@@ -102,16 +102,16 @@ public class BluetoothService implements BluetoothSPP.BluetoothConnectionListene
     public void onDeviceDisconnected() {
         // Do something when connection was disconnected
         Toast.makeText(context, "Disconnected...", Toast.LENGTH_SHORT).show();
-        btConnect = false;
+        isBTConnected = false;
         // TODO: Create pull request on resource 1
-        // btConnect = true;
+        // isBTConnected = true;
     }
 
     @Override
     public void onDeviceConnectionFailed() {
         // Do something when connection failed
         Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-        btConnect = false;
+        isBTConnected = false;
     }
 
     @Override

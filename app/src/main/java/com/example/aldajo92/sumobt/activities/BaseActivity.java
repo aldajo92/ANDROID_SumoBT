@@ -41,10 +41,10 @@ public class BaseActivity extends AppCompatActivity implements BluetoothService.
     @Override
     protected void onResume() {
         super.onResume();
-        if(!bluetoothService.getBtConnect()){
+        if(!bluetoothService.getIsBTConnected()){
 
         }
-        showMessage("is connected? " + bluetoothService.getBtConnect());
+        showMessage("is connected? " + bluetoothService.getIsBTConnected());
     }
 
     public AppComponent getActivityComponent() {

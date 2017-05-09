@@ -1,4 +1,5 @@
 package com.example.aldajo92.sumobt.activities;
+
 import android.os.Bundle;
 
 import com.example.aldajo92.sumobt.R;
@@ -27,12 +28,20 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onDrag(float degrees, float offset) {
-                showlog("drag");
+                showlog("drag degree=" + degrees + " offset=" + offset);
+                showlog("drag v=" +
+                        (int) (offset * 400 * Math.sin(Math.toRadians(degrees))) +
+                        " w=" +
+                        (int) (offset * 400 * Math.cos(Math.toRadians(degrees)))
+                );
+                if (getBluetoothService().getIsBTConnected()) {
+                    sendMessage("m-" + (int) offset * 400 + "-" );
+                }
             }
 
             @Override
             public void onUp() {
-                showlog("up");
+                sendMessage("f-0-0");
             }
         });
     }
