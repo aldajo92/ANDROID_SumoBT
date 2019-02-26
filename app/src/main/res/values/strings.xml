@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SumoBT</string>
+    <string name="loader_loading_title">Loading... Please Wait...</string>
 </resources>
