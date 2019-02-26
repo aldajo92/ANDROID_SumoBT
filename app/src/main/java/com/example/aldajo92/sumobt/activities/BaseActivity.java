@@ -8,10 +8,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.aldajo92.sumobt.BluetoothService;
-import com.example.aldajo92.sumobt.MyApplication;
-import com.example.aldajo92.sumobt.dagger.AppComponent;
-
-import javax.inject.Inject;
 
 /**
  * Created by aldajo92 on 4/14/17.
@@ -21,18 +17,15 @@ public class BaseActivity extends AppCompatActivity implements BluetoothService.
 
     private static String TAG = BaseActivity.class.getName();
 
-    @Inject
     BluetoothService bluetoothService;
-
-    AppComponent activityComponent;
 
     private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityComponent = ((MyApplication) getApplication()).getAppComponent();
-        activityComponent.inject(this);
+
+        bluetoothService = new BluetoothService(this);
 
         bluetoothService.checkBluetoothState(this);
         bluetoothService.setConnectedListener(this);
@@ -45,10 +38,6 @@ public class BaseActivity extends AppCompatActivity implements BluetoothService.
 
         }
         showMessage("is connected? " + bluetoothService.getIsBTConnected());
-    }
-
-    public AppComponent getActivityComponent() {
-        return activityComponent;
     }
 
     public BluetoothService getBluetoothService() {
