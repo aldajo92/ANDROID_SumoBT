@@ -1,4 +1,4 @@
-package com.example.aldajo92.sumobt;
+package com.projects.aldajo92.sumobt;
 
 import org.junit.Test;
 

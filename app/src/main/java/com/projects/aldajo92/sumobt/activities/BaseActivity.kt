@@ -1,4 +1,4 @@
-package com.example.aldajo92.sumobt.activities
+package com.projects.aldajo92.sumobt.activities
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 
-import com.example.aldajo92.sumobt.BluetoothService
-import com.example.aldajo92.sumobt.R
+import com.projects.aldajo92.sumobt.BluetoothService
+import com.projects.aldajo92.sumobt.R
 
 /**
  * Created by aldajo92 on 4/14/17.

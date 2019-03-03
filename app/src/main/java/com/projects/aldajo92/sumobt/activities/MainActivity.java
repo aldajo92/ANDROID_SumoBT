@@ -1,4 +1,4 @@
-package com.example.aldajo92.sumobt.activities;
+package com.projects.aldajo92.sumobt.activities;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -6,7 +6,7 @@ import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
-import com.example.aldajo92.sumobt.R;
+import com.projects.aldajo92.sumobt.R;
 import com.jmedeisis.bugstick.Joystick;
 import com.jmedeisis.bugstick.JoystickListener;
 

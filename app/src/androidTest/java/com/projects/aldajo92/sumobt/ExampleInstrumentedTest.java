@@ -1,4 +1,4 @@
-package com.example.aldajo92.sumobt;
+package com.projects.aldajo92.sumobt;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
