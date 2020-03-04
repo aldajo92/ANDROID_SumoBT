@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SumoBT.iml" filepath="$PROJECT_DIR$/SumoBT.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sumobt.iml" filepath="$PROJECT_DIR$/sumobt.iml" group="sumobt" />
+      <module fileurl="file://$PROJECT_DIR$/app/sumobt-app.iml" filepath="$PROJECT_DIR$/app/sumobt-app.iml" group="sumobt/app" />
     </modules>
   </component>
 </project>
