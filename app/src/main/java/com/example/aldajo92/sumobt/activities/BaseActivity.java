@@ -8,6 +8,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.aldajo92.sumobt.BluetoothService;
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
 
 /**
  * Created by aldajo92 on 4/14/17.
@@ -29,6 +32,9 @@ public class BaseActivity extends AppCompatActivity implements BluetoothService.
 
         bluetoothService.checkBluetoothState(this);
         bluetoothService.setConnectedListener(this);
+
+        AppCenter.start(getApplication(), "2655dca2-0780-4cb7-9721-99a7f082f47d",
+                Analytics.class, Crashes.class);
     }
 
     @Override
