@@ -29,7 +29,7 @@ dependencies {
     implementation "com.android.support:cardview-v7:$androidSupportVersion"
 
     // mpAndroidChart
-//    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
 
     // Dagger
 //    implementation "com.google.dagger:dagger:2.9"

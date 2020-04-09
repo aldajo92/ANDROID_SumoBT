@@ -118,11 +118,13 @@ public class BluetoothService implements BluetoothSPP.BluetoothConnectionListene
     public void onDataReceived(byte[] data, String message) {
         // TODO: Add RX TO DO CALLS
         Log.i(this.getClass().getName(), "onDataReceived: " + message);
+        connectedListener.onDataReceived(message);
     }
 
     public interface ConnectedListener {
         void onDeviceConnected();
         void onDeviceDisconnected();
         void onDeviceConnectionFailed();
+        void onDataReceived(String data);
     }
 }

@@ -89,4 +89,13 @@ public class BaseActivity extends AppCompatActivity implements BluetoothService.
     public void onDeviceConnectionFailed() {
 
     }
+
+    @Override
+    public void onDataReceived(String data) {
+        processData(data);
+    }
+
+    public void processData(String data){
+
+    }
 }

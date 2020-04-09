@@ -1,18 +1,33 @@
 package com.example.aldajo92.sumobt.activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.widget.TextView;
 
 import com.example.aldajo92.sumobt.R;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.jmedeisis.bugstick.Joystick;
 import com.jmedeisis.bugstick.JoystickListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
 
     Joystick joystick;
+    TextView textView;
+
+    private LineChart lineChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,10 +35,14 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         initViews();
+        initLinearData();
+        initDataSet();
     }
 
     private void initViews() {
         joystick = findViewById(R.id.joystick);
+        textView = findViewById(R.id.textview);
+        lineChart = findViewById(R.id.lineaChart_entries);
         joystick.setJoystickListener(new JoystickListener() {
             @Override
             public void onDown() {
@@ -49,9 +68,71 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onUp() {
-                sendMessage("f;0;0");
+                sendMessage("m;0;0");
             }
         });
+    }
+
+    private List<Entry> linearEntryList;
+    private LineDataSet set1;
+
+    private void initDataSet() {
+        set1 = new LineDataSet(linearEntryList, "DataSet");
+
+        set1.setDrawIcons(false);
+//        set1.setColor(ContextCompat.getColor(this, R.color.clear_color));
+//        set1.setCircleColor(Color.WHITE);
+        set1.setLineWidth(3f);
+//        set1.setCircleRadius(6f);
+//        set1.setCircleHoleRadius(4f);
+        set1.setDrawCircleHole(false);
+//        set1.setCircleHoleColor(Color.BLACK);
+        set1.setDrawValues(false);
+        set1.setValueTextSize(9f);
+        set1.setDrawFilled(false);
+        set1.setFormLineWidth(1f);
+        set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        set1.setFormSize(15f);
+
+        set1.setFillColor(Color.BLACK);
+
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(set1);
+
+        lineChart.setData(new LineData(dataSets));
+    }
+
+    private void initLinearData() {
+
+        lineChart.getDescription().setEnabled(false);
+        lineChart.getLegend().setEnabled(false);
+
+        lineChart.setPinchZoom(false);
+
+        lineChart.setScaleXEnabled(false);
+        lineChart.setScaleYEnabled(false);
+
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.enableGridDashedLine(10f, 10f, 0f);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setGranularity(1f);
+
+        YAxis axisLeft = lineChart.getAxisLeft();
+        axisLeft.removeAllLimitLines();
+        axisLeft.setDrawZeroLine(false);
+        axisLeft.setDrawLimitLinesBehindData(false);
+        axisLeft.setDrawAxisLine(true);
+        axisLeft.setDrawGridLines(true);
+        axisLeft.setDrawLabels(true);
+        axisLeft.setEnabled(true);
+//        axisLeft.setAxisMinimum(-2f);
+
+        YAxis axisRight = lineChart.getAxisRight();
+        axisRight.setDrawAxisLine(false);
+        axisRight.setDrawGridLines(false);
+        axisRight.setEnabled(false);
+//        axisRight.setAxisMinimum(-2f);
+
     }
 
     @Override
@@ -170,5 +251,60 @@ public class MainActivity extends BaseActivity {
             }
         }
         return 0;
+    }
+
+    private List<Float> incomesData;
+
+    private void setEntries(List<Float> incomesData) {
+        this.incomesData = incomesData;
+        if (incomesData != null && !incomesData.isEmpty()) {
+            linearEntryList = new ArrayList<>();
+            int entriesSize = incomesData.size();
+            for (int index = 0; index < entriesSize; index++) {
+                Float entryNoteModel = incomesData.get(index);
+                linearEntryList.add(new Entry(index, entryNoteModel));
+            }
+
+            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+            dataSets.add(set1);
+
+            lineChart.setData(new LineData(dataSets));
+
+            if (lineChart.getData() != null && lineChart.getData().getDataSetCount() > 0) {
+                set1 = (LineDataSet) lineChart.getData().getDataSetByIndex(0);
+                set1.setValues(linearEntryList);
+                lineChart.getData().notifyDataChanged();
+            }
+        } else {
+            lineChart.clear();
+        }
+
+        lineChart.notifyDataSetChanged();
+        lineChart.invalidate();
+    }
+
+    private void addEntry(float value) {
+        int size = 0;
+        if (linearEntryList != null) {
+            size = linearEntryList.size();
+        }
+        set1.addEntry(new Entry(size, value));
+        lineChart.getData().notifyDataChanged();
+        lineChart.notifyDataSetChanged();
+        lineChart.invalidate();
+    }
+
+    List<Float> values = new ArrayList<>();
+    int size = 100;
+
+    @Override
+    public void processData(String data) {
+        textView.setText(data);
+        float value = Float.parseFloat(data);
+        if(values.size() > 50){
+            values.remove(0);
+        }
+        values.add(value);
+        setEntries(values);
     }
 }
